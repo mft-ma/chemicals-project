@@ -14,7 +14,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @TableName(value = "inventory")
 public class Inventory {
-    @TableId(value = "did",type = IdType.AUTO)
+    @TableId(value = "kid",type = IdType.AUTO)
     private Integer kid;//主键
     private String number;
     private String name;

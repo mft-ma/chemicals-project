@@ -1,6 +1,7 @@
 package com.example.chemicalsproject.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -32,5 +33,13 @@ public class Order {
     private String phone;//联系电话
     private Date create_time;//创建时间
     private String remarks;//备注
+
+    private String formatId;
+    private Integer id;
+
+    @TableField(exist = false)
+    private Inventory inventory;
+    @TableField(exist = false)
+    private Commodity commodity;
 
 }
