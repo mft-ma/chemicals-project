@@ -1,5 +1,8 @@
 package com.example.chemicalsproject.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +14,8 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "sales")
-public class sales {
+public class Sales {
+    @TableId(value = "did",type = IdType.AUTO)
     private Integer did;//主键
     private Integer user_id;//业务员id
     private Integer order_id;//订单id
@@ -19,4 +23,7 @@ public class sales {
     private String tracking_name;//物流公司名称
     private Integer status;//退货状态 0未收到退货 1已收到
     private Date create_time;//创建时间
+
+    @TableField(exist = false)
+    private Order order;
 }
