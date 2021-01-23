@@ -24,6 +24,9 @@ public class Sales {
     private Integer status;//退货状态 0未收到退货 1已收到
     private Date create_time;//创建时间
 
+    private String formatId;
+    private Integer id;
+
     @TableField(exist = false)
     private Order order;
 }

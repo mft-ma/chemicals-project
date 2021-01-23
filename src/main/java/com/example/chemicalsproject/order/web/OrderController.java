@@ -2,9 +2,8 @@ package com.example.chemicalsproject.order.web;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.example.chemicalsproject.order.service.CommodityService;
-import com.example.chemicalsproject.order.service.InventoryService;
+import com.example.chemicalsproject.order.service.CommodityOrderService;
+import com.example.chemicalsproject.order.service.InventoryOrderService;
 import com.example.chemicalsproject.order.util.ImgUtils;
 import com.example.chemicalsproject.order.util.LayUiData;
 import com.example.chemicalsproject.order.util.OrderListConditionUtil;
@@ -15,19 +14,14 @@ import com.example.chemicalsproject.order.service.OrderService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.resource.HttpResource;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @CrossOrigin
@@ -36,9 +30,9 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
     @Autowired
-    private InventoryService inventoryService;
+    private InventoryOrderService inventoryService;
     @Autowired
-    private CommodityService commodityService;
+    private CommodityOrderService commodityService;
 
     /**
      * 查询订单列表
@@ -92,8 +86,8 @@ public class OrderController {
     }
 
     /**
-     * 删除员工
-     *
+     * 删除订单记录
+     * @param id
      * @return
      */
 //    @RequiresPermissions(value = {"user:delete"},logical = Logical.OR)
@@ -108,7 +102,7 @@ public class OrderController {
      * @return
      */
 //    @RequiresPermissions(value = {"user:batchDel"},logical = Logical.OR)
-    @RequestMapping("/delBatch")
+    @RequestMapping("/delBatchOrder")
     public void delBatch(@RequestParam String ids) {
         System.out.println("ids===" + ids);
         String[] id = ids.split(",");
@@ -208,6 +202,10 @@ public class OrderController {
     @PostMapping("/addOrder")
     public boolean addOrder(@RequestBody String json) {
         Order order = JSONObject.parseObject(json).toJavaObject(Order.class);
+
+        Date utilDate = new java.util.Date();//util.Date
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());//util.Date转sql.Date
+        order.setCreate_time(sqlDate);
 
         Integer user_id = order.getUser_id();//业务员id
         Integer commodity_id = order.getCommodity_id();//商品id

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.chemicalsproject.sales.mapper.SalesMapper">
+
+    <resultMap id="baseMap" type="sales">
+        <id property="did" column="did"/>
+        <result property="user_id" column="user_id"/>
+        <result property="order_id" column="order_id"/>
+        <result property="tracking_number" column="tracking_number"/>
+        <result property="tracking_name" column="tracking_name"/>
+        <result property="status" column="status"/>
+        <result property="create_time" column="create_time"/>
+        <association property="order" javaType="order">
+            <result property="did" column="orderID"/>
+            <result property="user_id" column="orderUser"/>
+            <result property="amount" column="amount"/>
+            <result property="price" column="price"/>
+            <result property="cost_price" column="cost_price"/>
+            <result property="royalties" column="royalties"/>
+            <result property="other_cost" column="other_cost"/>
+            <result property="bill" column="bill"/>
+            <result property="bill_info" column="bill_info"/>
+            <result property="commodity_id" column="commodity_id"/>
+            <result property="invoice_id" column="invoice_id"/>
+            <result property="status" column="orderStatus"/>
+            <result property="user_name" column="user_name"/>
+            <result property="address" column="address"/>
+            <result property="phone" column="phone"/>
+            <result property="create_time" column="orderCrea"/>
+            <result property="remarks" column="remarks"/>
+            <association property="commodity" javaType="commodity">
+                <result property="sid" column="sid"/>
+                <result property="name" column="name"/>
+                <result property="cas" column="cas"/>
+                <result property="userId" column="commodityUser"/>
+                <result property="priceInfo" column="price_info"/>
+                <result property="commodityInfo" column="commodity_info"/>
+                <result property="imgStatus" column="img_status"/>
+                <result property="imgPath" column="img_path"/>
+                <result property="fileStatus" column="file_status"/>
+                <result property="filePath" column="file_path"/>
+                <result property="supplierId" column="supplier_id"/>
+                <result property="createTime" column="commodityCrea"/>
+                <result property="updateTime" column="update_time"/>
+            </association>
+        </association>
+    </resultMap>
+
+    <select id="queryById" parameterType="Integer" resultMap="baseMap">
+        select s.*,oc.* from sales s,
+        (SELECT o.did orderID,o.user_id orderUser,o.amount,o.price,o.cost_price,o.royalties,o.other_cost,o.bill,o.bill_info,o.commodity_id,o.invoice_id,
+        o.`status` orderStatus,o.user_name,o.address,o.phone,o.create_time orderCrea,o.remarks,c.sid,c.name,c.cas,c.user_id commodityUser,c.price_info,
+        c.commodity_info,c.img_status,c.img_path,c.file_status,c.file_path,c.supplier_id,c.create_time commodityCrea,c.update_time
+        from `order` o,commodity c where o.commodity_id=c.sid) oc
+        where oc.orderID=s.order_id
+        <if test="did != null and did !=0">
+            and s.did = #{did}
+        </if>
+    </select>
+
+    <select id="queryAll" resultMap="baseMap">
+        select s.*,oc.* from sales s,
+        (SELECT o.did orderID,o.user_id orderUser,o.amount,o.price,o.cost_price,o.royalties,o.other_cost,o.bill,o.bill_info,o.commodity_id,o.invoice_id,
+        o.`status` orderStatus,o.user_name,o.address,o.phone,o.create_time orderCrea,o.remarks,c.sid,c.name,c.cas,c.user_id commodityUser,c.price_info,
+        c.commodity_info,c.img_status,c.img_path,c.file_status,c.file_path,c.supplier_id,c.create_time commodityCrea,c.update_time
+        from `order` o,commodity c where o.commodity_id=c.sid) oc
+        where oc.orderID=s.order_id
+        <if test="commodityName != null and commodityName !=''">
+            and oc.name like "%" #{commodityName} "%"
+        </if>
+        <if test="tracking_number != null and tracking_number !=''">
+            and s.tracking_number like "%" #{tracking_number} "%"
+        </if>
+        <if test="commodityUser != null and commodityUser !=''">
+            and s.user_id = #{commodityUser}
+        </if>
+    </select>
+
+</mapper>

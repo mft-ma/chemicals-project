@@ -1,22 +1,17 @@
 package com.example.chemicalsproject.order.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
-import com.example.chemicalsproject.login.mapper.UserMapper;
 import com.example.chemicalsproject.order.mapper.OrderMapper;
 import com.example.chemicalsproject.order.util.OrderListConditionUtil;
 import com.example.chemicalsproject.pojo.Order;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -27,7 +22,6 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
 
     /**
      * 根据条件查询 联合查询
-     *
      * @param page
      * @param condition
      * @return
@@ -59,7 +53,7 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
     }
 
     /**
-     * 设置固定格式的编号
+     * 设置固定格式的编号  订单编号DD00482
      * @param id
      * @return
      */
@@ -107,6 +101,18 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
         if(ll.contains(findValue))
             System.out.println("existed: " + findValue);
         else System.out.println("not existed: " + findValue);
+    }
+
+    /**
+     * 根据状态查询订单列表
+     * @param status
+     * @return
+     */
+    public PageInfo<Order> queryOrderByStatus(Integer page,Integer limit,Integer status){
+        PageHelper.startPage(page, limit);
+        List<Order> orderList = orderMapper.queryOrderByStatus(status);
+        PageInfo<Order> info=new PageInfo<>(orderList);
+        return info;
     }
 
 }

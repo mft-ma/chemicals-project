@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository
-public interface CommodityMapper extends BaseMapper<Commodity> {
+public interface CommodityOrderMapper extends BaseMapper<Commodity> {
 }

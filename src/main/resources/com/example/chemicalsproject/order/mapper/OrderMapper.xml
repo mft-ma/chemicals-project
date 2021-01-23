@@ -86,6 +86,20 @@
         ON oc.invoice_id=i.kid
     </select>
 
+    <select id="queryOrderByStatus" parameterType="int" resultMap="baseMap">
+        SELECT oc.*,i.kid,i.number,i.name inventoryName,i.cas inventoryCas,i.create_time inventoryCrea,i.update_time inventoryUdp,i.amount inventoryAmo,i.remark
+        FROM
+        (SELECT o.did,o.user_id orderUser,o.amount orderAmo,o.price,o.cost_price,o.royalties,o.other_cost,o.bill,o.bill_info,o.commodity_id,o.invoice_id,o.status,o.user_name,o.address,o.phone,o.create_time orderCrea,o.remarks,
+        c.sid,c.name commodityName,c.cas commodityCas,c.user_id commodityUser,c.price_info,c.commodity_info,c.img_status,c.img_path,c.file_status,c.file_path,c.supplier_id,c.create_time commodityCrea,c.update_time commodityUdp
+        from `order` o,commodity c
+        where o.commodity_id=c.sid
+        <if test="status != null and status !=0">
+            and o.`status` = #{status}
+        </if>
+        ) oc LEFT JOIN inventory i
+        ON oc.invoice_id=i.kid
+    </select>
+
     <insert id="saveOrder" parameterType="order">
         <selectKey keyProperty="did" order="AFTER" resultType="int">
             select last_insert_ID();

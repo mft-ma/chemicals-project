@@ -60,4 +60,11 @@ public interface OrderMapper extends BaseMapper<Order> {
      */
     boolean updateOrder(Order order);
 
+    /**
+     * 根据状态查询订单列表
+     * @param status
+     * @return
+     */
+    List<Order> queryOrderByStatus(@Param("status") Integer status);
+
 }
