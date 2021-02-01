@@ -15,5 +15,6 @@ public class OrderListConditionUtil {
     private String commodityName;
     private String startTime;
     private String endTime;
-    private Integer commodityUser;
+    private Integer user_id;
+    private Integer user_rule;
 }

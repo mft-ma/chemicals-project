@@ -79,8 +79,8 @@
         <if test="endTime != null and endTime !=''">
             and o.create_time <![CDATA[ <= ]]> #{endTime}
         </if>
-        <if test="commodityUser != null and commodityUser !=''">
-            and c.user_id = #{commodityUser}
+        <if test="user_id != null and user_id !=''">
+            and o.user_id = #{user_id} or c.user_id=#{user_id} and o.commodity_id=c.sid
         </if>
         ) oc LEFT JOIN inventory i
         ON oc.invoice_id=i.kid

@@ -37,6 +37,9 @@ public class SalesService extends ServiceImpl<SalesMapper, Sales> {
      */
     public PageInfo<Sales> queryAll(SalesListConditionUtil salesUtil) {
         System.out.println("service queryAll employee======" + salesUtil);
+        if(salesUtil.getUser_rule()==1){
+            salesUtil.setUser_id(null);
+        }
         PageHelper.startPage(salesUtil.getPage(), salesUtil.getLimit());
         List<Sales> salesList = salesMapper.queryAll(salesUtil);
         PageInfo<Sales> info=new PageInfo<>(salesList);

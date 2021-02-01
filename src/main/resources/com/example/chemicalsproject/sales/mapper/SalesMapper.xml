@@ -73,8 +73,8 @@
         <if test="tracking_number != null and tracking_number !=''">
             and s.tracking_number like "%" #{tracking_number} "%"
         </if>
-        <if test="commodityUser != null and commodityUser !=''">
-            and s.user_id = #{commodityUser}
+        <if test="user_id != null and user_id !=''">
+            and s.user_id = #{user_id}
         </if>
     </select>
 

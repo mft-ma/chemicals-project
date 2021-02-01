@@ -28,6 +28,9 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
      */
     public PageInfo<Order> queryAll(Integer page, Integer limit, OrderListConditionUtil condition) {
         System.out.println("service queryAll employee======" + condition);
+        if(condition.getUser_rule()==1){
+            condition.setUser_id(null);
+        }
         PageHelper.startPage(page, limit);
         List<Order> orderList = orderMapper.queryAll(condition);
         PageInfo<Order> info=new PageInfo<>(orderList);

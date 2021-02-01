@@ -41,9 +41,6 @@ public class OrderController {
      */
     @RequestMapping("/orderList")
     public LayUiData orderList(@RequestBody OrderListConditionUtil order){
-//        @RequestParam(defaultValue = "1") Integer page,
-//        @RequestParam(defaultValue = "5") Integer limit,
-//        System.out.println("page:"+page+"limit:"+limit);
         System.out.println("order=="+order);
         Integer page=order.getPage();
         Integer limit=order.getLimit();

@@ -12,5 +12,6 @@ public class SalesListConditionUtil {
     private Integer limit;
     private String commodityName;
     private String tracking_number;
-    private Integer commodityUser;
+    private Integer user_id;
+    private Integer user_rule;
 }
