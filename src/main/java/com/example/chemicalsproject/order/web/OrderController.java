@@ -301,7 +301,7 @@ public class OrderController {
      * @param inventory
      * @return
      */
-    @RequestMapping("/addInventory")
+    @RequestMapping("/addInventoryOrder")
     public boolean addInventory(@RequestBody Inventory inventory){
         System.out.println("addInventory的inventory："+inventory);
         return inventoryService.save(inventory);
