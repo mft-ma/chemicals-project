@@ -2,6 +2,7 @@ package com.example.chemicalsproject.user.UserController;
 
 import com.example.chemicalsproject.pojo.User;
 import com.example.chemicalsproject.user.UserService.UserS;
+import com.example.chemicalsproject.user.UserService.UserS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
