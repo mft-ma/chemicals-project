@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.chemicalsproject.order.mapper.OrderMapper">
+
+    <resultMap id="baseMap" type="order">
+        <id property="did" column="did"/>
+        <result property="user_id" column="orderUser"/>
+        <result property="amount" column="orderAmo"/>
+        <result property="price" column="price"/>
+        <result property="cost_price" column="cost_price"/>
+        <result property="royalties" column="royalties"/>
+        <result property="other_cost" column="other_cost"/>
+        <result property="bill" column="bill"/>
+        <result property="bill_info" column="bill_info"/>
+        <result property="commodity_id" column="commodity_id"/>
+        <result property="invoice_id" column="invoice_id"/>
+        <result property="status" column="status"/>
+        <result property="user_name" column="user_name"/>
+        <result property="address" column="address"/>
+        <result property="phone" column="phone"/>
+        <result property="create_time" column="orderCrea"/>
+        <result property="remarks" column="remarks"/>
+        <association property="commodity" javaType="commodity">
+            <result property="sid" column="sid"/>
+            <result property="name" column="commodityName"/>
+            <result property="cas" column="commodityCas"/>
+            <result property="userId" column="commodityUser"/>
+            <result property="priceInfo" column="price_info"/>
+            <result property="commodityInfo" column="commodity_info"/>
+            <result property="imgStatus" column="img_status"/>
+            <result property="imgPath" column="img_path"/>
+            <result property="fileStatus" column="file_status"/>
+            <result property="filePath" column="file_path"/>
+            <result property="supplierId" column="supplier_id"/>
+            <result property="createTime" column="commodityCrea"/>
+            <result property="updateTime" column="commodityUdp"/>
+        </association>
+        <association property="inventory" javaType="inventory">
+            <result property="kid" column="kid"/>
+            <result property="number" column="number"/>
+            <result property="name" column="inventoryName"/>
+            <result property="cas" column="inventoryCas"/>
+            <result property="create_time" column="inventoryCrea"/>
+            <result property="update_time" column="inventoryUdp"/>
+            <result property="amount" column="inventoryAmo"/>
+            <result property="remark" column="remark"/>
+        </association>
+    </resultMap>
+
+    <select id="queryById" parameterType="Integer" resultMap="baseMap">
+        SELECT oc.*,i.kid,i.number,i.name inventoryName,i.cas inventoryCas,i.create_time inventoryCrea,i.update_time inventoryUdp,i.amount inventoryAmo,i.remark
+        FROM
+        (SELECT o.did,o.user_id orderUser,o.amount orderAmo,o.price,o.cost_price,o.royalties,o.other_cost,o.bill,o.bill_info,o.commodity_id,o.invoice_id,o.status,o.user_name,o.address,o.phone,o.create_time orderCrea,o.remarks,
+        c.sid,c.name commodityName,c.cas commodityCas,c.user_id commodityUser,c.price_info,c.commodity_info,c.img_status,c.img_path,c.file_status,c.file_path,c.supplier_id,c.create_time commodityCrea,c.update_time commodityUdp
+        from `order` o,commodity c
+        where o.commodity_id=c.sid
+        <if test="did != null and did !=''">
+            and did = #{did}
+        </if>
+        ) oc LEFT JOIN inventory i
+        ON oc.invoice_id=i.kid
+    </select>
+
+    <select id="queryAll" resultMap="baseMap">
+        SELECT oc.*,i.kid,i.number,i.name inventoryName,i.cas inventoryCas,i.create_time inventoryCrea,i.update_time inventoryUdp,i.amount inventoryAmo,i.remark
+        FROM
+        (SELECT o.did,o.user_id orderUser,o.amount orderAmo,o.price,o.cost_price,o.royalties,o.other_cost,o.bill,o.bill_info,o.commodity_id,o.invoice_id,o.status,o.user_name,o.address,o.phone,o.create_time orderCrea,o.remarks,
+        c.sid,c.name commodityName,c.cas commodityCas,c.user_id commodityUser,c.price_info,c.commodity_info,c.img_status,c.img_path,c.file_status,c.file_path,c.supplier_id,c.create_time commodityCrea,c.update_time commodityUdp
+        from `order` o,commodity c
+        where o.commodity_id=c.sid
+        <if test="commodityName != null and commodityName !=''">
+            and c.name like "%" #{commodityName} "%"
+        </if>
+        <if test="startTime != null and startTime !=''">
+            and o.create_time <![CDATA[ >= ]]> #{startTime}
+        </if>
+        <if test="endTime != null and endTime !=''">
+            and o.create_time <![CDATA[ <= ]]> #{endTime}
+        </if>
+        <if test="user_id != null and user_id !=''">
+            and o.user_id = #{user_id} or c.user_id=#{user_id} and o.commodity_id=c.sid
+        </if>
+        ) oc LEFT JOIN inventory i
+        ON oc.invoice_id=i.kid
+    </select>
+
+    <select id="queryOrderByStatus" parameterType="int" resultMap="baseMap">
+        SELECT oc.*,i.kid,i.number,i.name inventoryName,i.cas inventoryCas,i.create_time inventoryCrea,i.update_time inventoryUdp,i.amount inventoryAmo,i.remark
+        FROM
+        (SELECT o.did,o.user_id orderUser,o.amount orderAmo,o.price,o.cost_price,o.royalties,o.other_cost,o.bill,o.bill_info,o.commodity_id,o.invoice_id,o.status,o.user_name,o.address,o.phone,o.create_time orderCrea,o.remarks,
+        c.sid,c.name commodityName,c.cas commodityCas,c.user_id commodityUser,c.price_info,c.commodity_info,c.img_status,c.img_path,c.file_status,c.file_path,c.supplier_id,c.create_time commodityCrea,c.update_time commodityUdp
+        from `order` o,commodity c
+        where o.commodity_id=c.sid
+        <if test="status != null and status !=0">
+            and o.`status` = #{status}
+        </if>
+        ) oc LEFT JOIN inventory i
+        ON oc.invoice_id=i.kid
+    </select>
+
+    <insert id="saveOrder" parameterType="order">
+        <selectKey keyProperty="did" order="AFTER" resultType="int">
+            select last_insert_ID();
+        </selectKey>
+        insert into `order`
+        value (null,#{user_id},#{amount},#{price},#{cost_price},#{royalties},#{other_cost},'${bill}',#{bill_info},#{commodity_id},#{invoice_id},'0',#{user_name},#{address},#{phone},#{create_time},#{remarks})
+    </insert>
+
+    <update id="updateOrder" parameterType="order">
+        update `order`
+        set amount=#{amount},price=#{price},cost_price=#{cost_price},royalties=#{royalties},other_cost=#{other_cost},bill='${bill}',bill_info=#{bill_info},invoice_id=#{invoice_id},user_name=#{user_name},address=#{address},phone=#{phone},remarks=#{remarks}
+        where did=#{did}
+    </update>
+
+</mapper>

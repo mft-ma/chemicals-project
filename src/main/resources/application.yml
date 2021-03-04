@@ -1,0 +1,49 @@
+server:
+  port: 7001
+  servlet:
+    encoding:
+      force-response: true
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/chemicalsproject?serverTimezone=UTC&useSSL=false
+  #    type: com.alibaba.druid.pool.DruidDataSource
+
+  web:
+    resources:
+      static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/templates/
+      #D:\environment\apache-tomcat-8.0.35\webapps\down
+      chain:
+        strategy:
+          content:
+            paths: /down/**
+
+  aop:
+    proxy-target-class: true
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+      field-strategy: not_empty
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+      db-type: mysql
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: com.example.chemicalsproject.pojo
+
+
+
+
+

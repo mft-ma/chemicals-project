@@ -13,25 +13,19 @@ import java.sql.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName(value = "commodity")
-public class Commodity {
-
-    @TableId(value = "sid",type = IdType.AUTO)
-    private Integer sid;
-    private String name;
-    private String cas;
+@TableName(value = "supplier")
+public class Supplier {
+    @TableId(value = "gid",type = IdType.AUTO)
+    private Integer gid;
     private Integer userId;
-    private String priceInfo;
-    private String commodityInfo;
-    private String imgStatus;
-    private String imgPath;
-    private String fileStatus;
-    private String filePath;
-    private Integer supplierId;
+    private String name;//供应商名称
+    private String phone;
+    private String wechat;
+    private String status;
     private Date createTime;
-    private Date updateTime;
+    private String remark;//备注
     @TableField(exist = false)
     private User user;
     @TableField(exist = false)
-    private Inventory inventory;
+    private String formatId;
 }
