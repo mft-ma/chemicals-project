@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.example.chemicalsproject.login.service.LoginService;
 import com.example.chemicalsproject.login.util.LoadUtil;
+import com.example.chemicalsproject.login.vo.Banner;
 import com.example.chemicalsproject.pojo.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -100,6 +101,49 @@ public class LoginController {
             names.add(user.getUsername());
         }
         return names;
+    }
+
+    /**
+     * 获取轮播图list
+     * @return
+     */
+    @RequestMapping("/bannerList")
+    public List<Banner> bannerList(){
+        System.out.println("走bannerList");
+        List<Banner> list=new ArrayList<>();
+        list.add(new Banner(
+                "商品管理",
+                "https://guli-entrepot.oss-cn-beijing.aliyuncs.com/avatar/2021/03/%E5%95%86%E5%93%81.png",
+                "/#/commodity"));
+        list.add(new Banner(
+                "发票管理",
+                "https://guli-entrepot.oss-cn-beijing.aliyuncs.com/avatar/2021/03/%E5%8F%91%E7%A5%A8.png",
+                "/#/invoice"));
+        list.add(new Banner(
+                "库存管理",
+                "https://guli-entrepot.oss-cn-beijing.aliyuncs.com/avatar/2021/03/%E5%BA%93%E5%AD%98.png",
+                "/#/inventory"));
+        list.add(new Banner(
+                "供应商管理",
+                "https://guli-entrepot.oss-cn-beijing.aliyuncs.com/avatar/2021/03/%E4%BE%9B%E8%B4%A7%E5%95%86.png",
+                "/#/supplier"));
+        list.add(new Banner(
+                "订单管理",
+                "https://guli-entrepot.oss-cn-beijing.aliyuncs.com/avatar/2021/03/%E8%AE%A2%E5%8D%95.png",
+                "/#/order"));
+        list.add(new Banner(
+                "采购管理",
+                "https://guli-entrepot.oss-cn-beijing.aliyuncs.com/avatar/2021/03/%E9%87%87%E8%B4%AD.png",
+                "/#/purchase"));
+        list.add(new Banner(
+                "业务员管理",
+                "https://guli-entrepot.oss-cn-beijing.aliyuncs.com/avatar/2021/03/%E4%B8%9A%E5%8A%A1%E5%91%98.png",
+                "/#/user"));
+        list.add(new Banner(
+                "退货管理",
+                "https://guli-entrepot.oss-cn-beijing.aliyuncs.com/avatar/2021/03/%E9%80%80%E8%B4%A7.png",
+                "/#/sales"));
+        return list;
     }
 
 }
