@@ -19,4 +19,12 @@ public class SupplierService extends ServiceImpl<SupplierMapper, Supplier> {
     public List querySupplier( SupplierDO supplierDO){
         return supplierMapper.querySupplier(supplierDO);
     }
+
+    public  String IdFormat(Integer id){
+        return String.format("AH%05d",id);
+    }
+
+    public boolean supplierUpd(String status,Integer gid){
+        return supplierMapper.supplierUpd(status,gid);
+    }
 }

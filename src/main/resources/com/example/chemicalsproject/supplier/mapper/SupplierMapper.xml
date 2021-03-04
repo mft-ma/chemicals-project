@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.chemicalsproject.supplier.mapper.SupplierMapper">
-    <resultMap id="supplierAndUser" type="com.example.chemicalsproject.pojo.Supplier">
+    <resultMap id="supplierAndUser" type="supplier">
         <id column="gid" property="gid"></id>
         <result column="user_id" property="userId"></result>
         <result column="name" property="name"></result>
@@ -12,7 +12,7 @@
         <result column="status" property="status"></result>
         <result column="create_time" property="createTime"></result>
         <result column="remark" property="remark"></result>
-        <association property="user" javaType="com.example.chemicalsproject.pojo.User">
+        <association property="user" javaType="user">
             <result column="user_name" property="username"></result>
         </association>
     </resultMap>

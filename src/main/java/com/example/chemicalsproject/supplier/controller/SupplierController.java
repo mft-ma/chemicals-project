@@ -2,8 +2,7 @@ package com.example.chemicalsproject.supplier.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.chemicalsproject.pojo.Supplier;
-import com.example.chemicalsproject.supplier.mapper.UserMapper;
-import com.example.chemicalsproject.supplier.service.UserService;
+import com.example.chemicalsproject.supplier.service.UserForSupplierService;
 import com.example.chemicalsproject.supplier.util.SupplierDO;
 import com.example.chemicalsproject.supplier.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +18,17 @@ public class SupplierController {
     @Autowired
     private SupplierService supplierService;
     @Autowired
-    private UserService userService;
+    private UserForSupplierService userService;
 
     //查询供应商 &组合查询
     @RequestMapping("/querySupplier")
     @ResponseBody
     public List querySupplier(SupplierDO supplierDO){
-        return supplierService.querySupplier(supplierDO);
+        List<Supplier> list=supplierService.querySupplier(supplierDO);
+        for(Supplier supplier:list){
+            supplier.setFormatId(supplierService.IdFormat(supplier.getGid()));
+        }
+        return list;
     }
 
     //查询业务员表
@@ -57,7 +60,20 @@ public class SupplierController {
         return supplierService.getById(gid);
     }
 
-    public boolean updSupplier(Supplier supplier){
+    //修改
+    @RequestMapping("/updSupplier")
+    @ResponseBody
+    public boolean updSupplier(@RequestBody Supplier supplier){
       return supplierService.updateById(supplier);
     }
+
+    @RequestMapping("/querySupplierByName")
+    @ResponseBody
+    public Supplier querySupplierByName(String name){
+        QueryWrapper<Supplier> supplierQueryWrapper = new QueryWrapper<>();
+        supplierQueryWrapper.like("name",name);
+        return supplierService.getOne(supplierQueryWrapper);
+    }
+
+
 }

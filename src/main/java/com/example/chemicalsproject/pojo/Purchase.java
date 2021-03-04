@@ -11,27 +11,25 @@ import lombok.NoArgsConstructor;
 import java.sql.Date;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@TableName(value = "commodity")
-public class Commodity {
-
-    @TableId(value = "sid",type = IdType.AUTO)
-    private Integer sid;
+@NoArgsConstructor
+@TableName(value = "purchase")
+public class Purchase {
+    @TableId(value = "cid",type = IdType.AUTO)
+    private int cid;
+    private int userId;
     private String name;
     private String cas;
-    private Integer userId;
-    private String priceInfo;
-    private String commodityInfo;
-    private String imgStatus;
-    private String imgPath;
-    private String fileStatus;
-    private String filePath;
-    private Integer supplierId;
+    private int amount;
+    private double price;
+    private String priceStatus;
+    private double sumPrice;
+    private String status;
+    private String supplierName;
+    private String supplierPhone;
+    private String trackingNumber;
     private Date createTime;
-    private Date updateTime;
+    private int ann;
     @TableField(exist = false)
     private User user;
-    @TableField(exist = false)
-    private Inventory inventory;
 }

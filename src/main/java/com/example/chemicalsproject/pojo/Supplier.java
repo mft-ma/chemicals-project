@@ -26,4 +26,6 @@ public class Supplier {
     private String remark;//备注
     @TableField(exist = false)
     private User user;
+    @TableField(exist = false)
+    private String formatId;
 }

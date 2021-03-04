@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.chemicalsproject.purchase.mapper.PurchaseMapper">
+    <resultMap id="purchaseAndUser" type="purchase">
+        <id property="cid" column="cid"></id>
+        <result property="name" column="name"></result>
+        <result property="userId" column="user_id"></result>
+        <result property="cas" column="cas"></result>
+        <result property="amount" column="amount"></result>
+        <result property="price" column="price"></result>
+        <result property="priceStatus" column="price_status"></result>
+        <result property="sumPrice" column="sum_price"></result>
+        <result property="status" column="status"></result>
+        <result property="supplierName" column="supplier_name"></result>
+        <result property="supplierPhone" column="supplier_phone"></result>
+        <result property="trackingNumber" column="tracking_number"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="ann" column="ann"></result>
+        <association property="user" javaType="user">
+            <result column="user_name" property="username"></result>
+        </association>
+    </resultMap>
+    <select id="queryPurchase" resultMap="purchaseAndUser">
+        select * from purchase left join users on user_id=uid
+        <where>
+            <if test="name!=null and name!=''">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="cas!=null and cas!=''">
+                and cas like concat('%',#{cas},'%')
+            </if>
+            <if test="supplierName!=null and supplierName!=''">
+                and supplier_name like concat('%',#{supplierName},'%')
+            </if>
+            <if test="trackingNumber!=null and trackingNumber!=''">
+                and tracking_number like concat('%',#{trackingNumber},'%')
+            </if>
+        </where>
+    </select>
+
+</mapper>
