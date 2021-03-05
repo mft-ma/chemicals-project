@@ -3,7 +3,6 @@ package com.example.chemicalsproject.login.realm;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.chemicalsproject.login.service.LoginService;
 import com.example.chemicalsproject.pojo.User;
-import com.example.chemicalsproject.supplier.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
