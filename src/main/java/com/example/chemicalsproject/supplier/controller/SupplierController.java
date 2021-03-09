@@ -69,10 +69,10 @@ public class SupplierController {
 
     @RequestMapping("/querySupplierByName")
     @ResponseBody
-    public Supplier querySupplierByName(String name){
+    public List<Supplier> querySupplierByName(String name){
         QueryWrapper<Supplier> supplierQueryWrapper = new QueryWrapper<>();
         supplierQueryWrapper.like("name",name);
-        return supplierService.getOne(supplierQueryWrapper);
+        return supplierService.list(supplierQueryWrapper);
     }
 
 
