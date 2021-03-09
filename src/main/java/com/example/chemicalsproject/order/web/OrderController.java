@@ -197,8 +197,10 @@ public class OrderController {
      */
 //    @RequiresPermissions(value = {"user:add"},logical = Logical.OR)
     @PostMapping("/addOrder")
-    public boolean addOrder(@RequestBody String json) {
-        Order order = JSONObject.parseObject(json).toJavaObject(Order.class);
+    public boolean addOrder(@RequestBody Order order) {
+//        Order order = JSONObject.parseObject(json).toJavaObject(Order.class);
+
+        System.out.println("添加order==="+order);
 
         Date utilDate = new java.util.Date();//util.Date
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());//util.Date转sql.Date

@@ -1,5 +1,6 @@
 package com.example.chemicalsproject.sales.web;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.chemicalsproject.order.service.InventoryOrderService;
 import com.example.chemicalsproject.order.service.OrderService;
 import com.example.chemicalsproject.order.util.LayUiData;
@@ -160,7 +161,9 @@ public class SalesController {
 
         //库存数量还原
         Integer inventory_id=order.getInvoice_id();
-        Inventory inventory = inventoryOrderService.getById(inventory_id);
+        QueryWrapper<Inventory> wrapper=new QueryWrapper<>();
+        wrapper.eq("number",inventory_id);
+        Inventory inventory = inventoryOrderService.getOne(wrapper);
         double newInventoryAmount = inventory.getAmount()+order.getAmount();
         inventory.setAmount(newInventoryAmount);
         boolean updateInventoryById = inventoryOrderService.updateById(inventory);
