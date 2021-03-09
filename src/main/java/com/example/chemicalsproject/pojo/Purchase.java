@@ -32,4 +32,6 @@ public class Purchase {
     private int ann;
     @TableField(exist = false)
     private User user;
+    @TableField(exist = false)
+    private String formatId;
 }

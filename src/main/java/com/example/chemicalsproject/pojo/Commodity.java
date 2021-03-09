@@ -34,4 +34,6 @@ public class Commodity {
     private User user;
     @TableField(exist = false)
     private Inventory inventory;
+    @TableField(exist = false)
+    private String formatId;
 }
