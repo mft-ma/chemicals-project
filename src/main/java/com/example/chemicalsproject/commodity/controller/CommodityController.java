@@ -54,6 +54,7 @@ public class CommodityController {
     @ResponseBody
     public boolean saveCommodity(@RequestBody Commodity commodity){
         commodity.setCreateTime(new Date(new java.util.Date().getTime()));//创建时间
+        commodity.setUpdateTime(new Date(new java.util.Date().getTime()));//更新时间
         if(commodity.getSupplierId()!=null){
             String status="已关联";
             Integer gid=commodity.getSupplierId();
@@ -65,6 +66,7 @@ public class CommodityController {
     @RequestMapping("/updCommodity")
     @ResponseBody
     public boolean updCommodity(@RequestBody Commodity commodity){
+        commodity.setUpdateTime(new Date(new java.util.Date().getTime()));//更新时间
         return commodityService.updateById(commodity);
     }
 

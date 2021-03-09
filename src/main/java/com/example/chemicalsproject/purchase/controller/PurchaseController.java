@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.Date;
 import java.util.List;
 
 @Controller
@@ -36,6 +37,7 @@ public class PurchaseController {
     @RequestMapping("/addPurchase")
     @ResponseBody
     public boolean addPurchase(@RequestBody Purchase purchase){
+        purchase.setCreateTime(new Date(new java.util.Date().getTime()));//创建时间
         double sumPrice=purchase.getPrice()*purchase.getAmount();//总价
         purchase.setSumPrice(sumPrice);
         return  purchaseService.save(purchase);
