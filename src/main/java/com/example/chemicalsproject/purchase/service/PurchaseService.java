@@ -29,4 +29,8 @@ public class PurchaseService extends ServiceImpl<PurchaseMapper, Purchase> {
     public boolean updatePurchaseTrackingNumber(String tracking_number,Integer cid){
         return purchaseMapper.updatePurchaseTrackingNumber(tracking_number,cid);
     }
+
+    public  String IdFormat(Integer id){
+        return String.format("CG%05d",id);
+    }
 }

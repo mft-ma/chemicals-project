@@ -23,4 +23,12 @@ public class CommodityService extends ServiceImpl<CommodityMapper, Commodity> {
     public Commodity queryCommodityById(Integer sid){
         return commodityMapper.queryCommodityById(sid);
     }
+
+    public  String IdFormat(Integer id){
+        return String.format("BH%05d",id);
+    }
+
+    public Double queryCommodityAmountById(Integer sid){
+        return commodityMapper.queryCommodityAmountById(sid);
+    }
 }
