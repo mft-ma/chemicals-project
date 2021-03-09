@@ -21,7 +21,11 @@ public class PurchaseController {
     @RequestMapping("/queryPurchase")
     @ResponseBody
     public List queryPurchase(PurchaseDo purchaseDo){
-        return purchaseService.queryPurchase(purchaseDo);
+        List<Purchase> list= purchaseService.queryPurchase(purchaseDo);
+        for(Purchase purchase:list){
+            purchase.setFormatId(purchaseService.IdFormat(purchase.getCid()));
+        }
+        return list;
     }
 
     /**

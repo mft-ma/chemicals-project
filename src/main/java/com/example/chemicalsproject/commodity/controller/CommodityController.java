@@ -1,12 +1,10 @@
 package com.example.chemicalsproject.commodity.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.chemicalsproject.commodity.service.CommodityService;
 import com.example.chemicalsproject.commodity.util.CommodityDo;
 import com.example.chemicalsproject.pojo.Commodity;
 import com.example.chemicalsproject.supplier.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -22,13 +20,28 @@ public class CommodityController {
 
     @RequestMapping("/queryCommodity")
     public List queryCommodity(CommodityDo commodityDo){
-        return commodityService.queryCommodity(commodityDo);
+         List<Commodity> list=commodityService.queryCommodity(commodityDo);
+         for (Commodity commodity:list){
+             commodity.setFormatId(commodityService.IdFormat(commodity.getSid()));
+         }
+         return list;
     }
 
     @RequestMapping("/queryCommodityBySid")
     @ResponseBody
     public Commodity queryCommodityById(Integer sid){
        return commodityService.queryCommodityById(sid);
+    }
+
+    /**
+     * 根据商品id查询库存数量
+     * @param sid
+     * @return
+     */
+    @RequestMapping("/queryCommodityAmountById")
+    @ResponseBody
+    public Double queryCommodityAmountById(Integer sid){
+        return commodityService.queryCommodityAmountById(sid);
     }
 
     @RequestMapping("/delCommodity")
@@ -54,5 +67,9 @@ public class CommodityController {
     public boolean updCommodity(@RequestBody Commodity commodity){
         return commodityService.updateById(commodity);
     }
+
+
+
+
 
 }
